@@ -14,6 +14,9 @@ dependencies:
   mobx: ^2.1.1
   carousel_slider: ^4.1.1
   cupertino_icons: ^1.0.2
+  shared_preferences: ^2.0.15
+  material_color_generator: ^1.1.0
+  lottie: ^1.4.3
 
 dev_dependencies:
   flutter_test:
@@ -28,6 +31,7 @@ flutter:
     - assets/images/img2.jpg
     - assets/images/img3.jpg
     - assets/images/img4.jpg
+    - assets/lottie/book.json
 
   # To add assets to your application, add an assets section, like this:
 

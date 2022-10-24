@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:projeto_integrador/carousel_page.dart';
+import 'package:material_color_generator/material_color_generator.dart';
+import 'package:projeto_integrador/loading_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -12,9 +13,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Projeto integrador',
       theme: ThemeData(
-        primarySwatch: Colors.yellow,
+        primarySwatch: generateMaterialColor(color:const Color(0xff00A8E8)),
       ),
-      home: const CarousselPage(),
+      home: const LoadingPage(),
     );
   }
 }

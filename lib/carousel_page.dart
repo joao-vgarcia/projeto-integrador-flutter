@@ -35,61 +35,100 @@ class _CarousselPageState extends State<CarousselPage> {
 
   @override
   Widget build(BuildContext context) {
+    Size screenSizes = MediaQuery.of(context).size;
+
     return Scaffold(
-      body: Column(
-        children: [
-          const Padding(
-            padding: EdgeInsets.only(top: 50, bottom: 30),
-            child: Text(
-              'Projeto integrador', 
-              style: TextStyle(
-                fontSize: 30,
-              ),
-            ),
-          ),      
-          CarouselSlider(
-            options: CarouselOptions(
-              height: 400.0,
-              initialPage: 0,
-              enableInfiniteScroll: false,
-              onPageChanged: ((index, reason) => habilitarBotao(index))
-            ),
-            items: [0, 1, 2, 3].map((i) {
-              return Builder(
-                builder: (BuildContext context) {
-                  return Container(
-                    width: MediaQuery.of(context).size.width,
-                    margin: const EdgeInsets.symmetric(horizontal: 5.0),
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: images[i],
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                    child: Center(
-                      child:
-                          Text(
-                            texts[i], 
-                            style: const TextStyle(
-                              fontSize: 16.0,
-                              backgroundColor: Color(0x88FFFFFF)
-                            ),
-                          ),
-                      )
-                  );
-                },
-              );
-            }).toList(),
-          ),
-          OutlinedButton(
-            style: ButtonStyle(
-              backgroundColor: botaoHabilitado ? const MaterialStatePropertyAll<Color>(Color(0xff120a8f)) : const MaterialStatePropertyAll<Color>(Color(0xfffffffff)),
-            ),
-            child: Text(botaoHabilitado ? 'Entrar' : ''), 
-            onPressed: () => botaoHabilitado ? print('pode seguir para proxima tela') : null,
+      appBar: AppBar(
+        title: const Center(child: Text('Projeto Integrador', style: TextStyle(color: Colors.white, fontWeight: FontWeight.w700),)),
+      ),
+      backgroundColor: Colors.transparent,
+      body: Container(
+        width: screenSizes.width,
+        height: screenSizes.height,
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+              Color(0xff003A6B),
+              Color(0xff2C5D87),
+              Color(0xff5880A2),
+              Color(0xff83A3BE),
+              Color(0xffAFC6D9),
+              Color(0xffDBE9F5),
+            ],
+            begin: Alignment.bottomCenter,
+            end: Alignment.topCenter
           )
+        ),
+        child: Column(
+        children: [   
+          Padding(
+            padding: const EdgeInsets.only(top: 20),
+            child: CarouselSlider(
+              options: CarouselOptions(
+                height: screenSizes.height - 300,
+                enlargeCenterPage: true,
+                initialPage: 0,
+                enableInfiniteScroll: false,
+                onPageChanged: ((index, reason) => habilitarBotao(index))
+              ),
+              items: [0, 1, 2, 3].map((i) {
+                return Builder(
+                  builder: (BuildContext context) {
+                    return Container(
+                      width: MediaQuery.of(context).size.width,
+                      margin: const EdgeInsets.symmetric(horizontal: 5.0),
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: images[i],
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                      child: Center(
+                        child:
+                            Container(
+                              width: screenSizes.width,
+                              height: 70,
+                              decoration: BoxDecoration(color: Colors.white),
+                              alignment: Alignment.center,
+                              child: Text(
+                                texts[i], 
+                                textAlign: TextAlign.center,
+                                style: const TextStyle(
+                                  fontSize: 20.0,
+                                  backgroundColor: Color(0xffFFFFFF),
+                                  color: Color(0xffff003A6B)
+                                ),
+                              ),
+                            ),
+                        )
+                    );
+                  },
+                );
+              }).toList(),
+            ),
+          ),
+          botaoHabilitado 
+          ? Padding(
+            padding: EdgeInsets.only(top: (screenSizes.height / 100) * 3),
+            child: OutlinedButton(
+              style: const ButtonStyle(
+                backgroundColor: MaterialStatePropertyAll<Color>(Color.fromARGB(255, 6, 1, 82)),
+                minimumSize: MaterialStatePropertyAll<Size>(Size(250, 60)),
+                maximumSize: MaterialStatePropertyAll<Size>(Size(350, 60)),
+              ),
+              child: const Text(
+                'Entrar', 
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 18,
+                ),
+              ), 
+              onPressed: () => print('pode seguir para proxima tela'),
+            ),
+          )
+          : const SizedBox.shrink()
         ],
       ),
-    );
+    ),);
   }
 }
