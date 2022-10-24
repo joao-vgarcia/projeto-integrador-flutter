@@ -45,19 +45,18 @@ class _CarousselPageState extends State<CarousselPage> {
       body: Container(
         width: screenSizes.width,
         height: screenSizes.height,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              Color(0xff003A6B),
-              Color(0xff2C5D87),
-              Color(0xff5880A2),
-              Color(0xff83A3BE),
-              Color(0xffAFC6D9),
-              Color(0xffDBE9F5),
+              Color(0xff28313b),
+              Color(0xff485461),
+             
             ],
             begin: Alignment.bottomCenter,
             end: Alignment.topCenter
           )
+          // color: Color(0xff1c1c1c),
+          // color: Color(0xffAFC6D9),
         ),
         child: Column(
         children: [   
@@ -112,7 +111,7 @@ class _CarousselPageState extends State<CarousselPage> {
             padding: EdgeInsets.only(top: (screenSizes.height / 100) * 3),
             child: OutlinedButton(
               style: const ButtonStyle(
-                backgroundColor: MaterialStatePropertyAll<Color>(Color.fromARGB(255, 6, 1, 82)),
+                backgroundColor: MaterialStatePropertyAll<Color>(Color(0xff00A8E8)),
                 minimumSize: MaterialStatePropertyAll<Size>(Size(250, 60)),
                 maximumSize: MaterialStatePropertyAll<Size>(Size(350, 60)),
               ),

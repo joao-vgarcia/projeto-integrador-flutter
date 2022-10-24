@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Projeto integrador',
       theme: ThemeData(
-        primarySwatch: generateMaterialColor(color:const Color(0xff00A8E8)),
+        primarySwatch: generateMaterialColor(color:const Color(0xff28313b)),
       ),
       home: const LoadingPage(),
     );

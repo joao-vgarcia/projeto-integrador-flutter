@@ -71,16 +71,19 @@ class _LoadingPageState extends State<LoadingPage> with TickerProviderStateMixin
         decoration: const BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              Color(0xff003A6B),
-              Color(0xff2C5D87),
-              Color(0xff5880A2),
-              Color(0xff83A3BE),
-              Color(0xffAFC6D9),
-              Color(0xffDBE9F5),
+              Color(0x9928313b),
+              Color(0xaa28313b),
+              Color(0xbb28313b),
+              Color(0xcc28313b),
+              Color(0xdd28313b),
+              Color(0xee28313b),
+              Color(0xff28313b),
+              Color(0x99485461),
             ],
-            begin: Alignment.bottomCenter,
-            end: Alignment.topCenter
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter
           )
+          // color: Color(0xff1c1c1c),
         ),
         child: Column(
           children: [
@@ -89,7 +92,7 @@ class _LoadingPageState extends State<LoadingPage> with TickerProviderStateMixin
               child: Text(
                 'Nós não armazenamos seus dados!\nPortanto não desinstale o app, caso contrário você perderá todos seus dados de leitura e recomendações!',
                 style: TextStyle(
-                  color: Color.fromARGB(255, 22, 22, 22),
+                  color: Color(0xffAFC6D9),
                   fontSize: 18,
                   height: 1.8
                 ),
@@ -106,18 +109,24 @@ class _LoadingPageState extends State<LoadingPage> with TickerProviderStateMixin
             ),
             carregando 
               ? CircularProgressIndicator(
-                color: const Color(0xff120a8f),
+                color: const Color(0xff00A8E8),
                 value: controller.value,
               )
               : Padding(
                 padding: EdgeInsets.only(top: (screenSizes.height / 100) * 1),
                 child: OutlinedButton(
                   style: const ButtonStyle(
-                    backgroundColor: MaterialStatePropertyAll<Color>(Color(0xff120a8f)),
-                    minimumSize: MaterialStatePropertyAll<Size>(Size(250, 40)),
-                    maximumSize: MaterialStatePropertyAll<Size>(Size(350, 40)),
+                    backgroundColor: MaterialStatePropertyAll<Color>(Color(0xff00A8E8),),
+                    minimumSize: MaterialStatePropertyAll<Size>(Size(250, 60)),
+                    maximumSize: MaterialStatePropertyAll<Size>(Size(350, 60)),
                   ),
-                  child: const Text('Continuar', style: TextStyle(color: Colors.white),), 
+                  child: const Text(
+                    'Entrar', 
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,
+                    ),
+                  ), 
                   onPressed: () => _continuar(context),
                 ),
               ),
