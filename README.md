@@ -11,9 +11,9 @@ Incluir um dos seguintes requisitos: uso e fornecimento de API, análises de dad
 
 ## Projeto: Planning Books 
 
-Nesse semestre escolhemos desenvolver um aplicativo Planner Virtual para organizar e buscar nomes de livros que o usuario queira ler ou já leu com objetivo de lembrar quais os titulos já foram lido....
+Nesse semestre escolhemos desenvolver um aplicativo Planner Virtual para organizar e buscar nomes de livros que o usuário queira ler ou já leu com objetivo de lembrar quais os títulos já foram lidos. 
 
-O aplicativo mantem registro de históricos dos nomes de Livros lidos bem como tem uma ferramenta que possibilide a indicação de novos títulos dentro da analise de dados de livros que 
+O aplicativo mante registro de históricos dos nomes de Livros lidos bem como tem uma ferramenta que possibilita a indicação de novos títulos dentro da análise de dados do padrão da sua leitura.
 
 ## Apresentação
 
@@ -29,15 +29,24 @@ Visual Studio Code - Editor de código aberto (versão 1.71.0 ou superior)
 
 GIT - Sistema de versionamento de arquivos (versão 2.37.3 ou superior)
 
-GITHUB - caso não tenha uma conta, criar. E clonar o repositorio do projeto para rodar na sua maquina. 
+GITHUB - caso não tenha uma conta, criar. E clonar o repositório do projeto para rodar na sua máquina. 
 
 Flutter - Sistema que cria aplicativos bonitos e rápidos, extensível e aberto, seja par IOS ou Android. 
 
-API que*
+API API que iremos usar é [https://openlibrary.org/developers/api?ref=publicapis.dev]
 
-Instale a bibliotecas*
+Instalação: 
 
-Ou se clonar atraves do Github as bibliotecas já estaram instaladas. 
+Clonar o projeto através do Github [https://github.com/joao-vgarcia/projeto-integrador-flutter]
+
+Bibliotecas que foram usadas:
+
+
+
+
+
+
+
 
 
 
