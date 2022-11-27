@@ -4,7 +4,7 @@ import 'package:lottie/lottie.dart';
 import 'package:projeto_integrador/Controller/Login/login_controller.dart';
 import 'package:projeto_integrador/Service/service_locator.dart';
 import 'package:projeto_integrador/View/carousel_page.dart';
-import 'package:projeto_integrador/View/login_page.dart';
+import 'package:projeto_integrador/View/widgets/base_page.dart';
 import 'package:projeto_integrador/View/widgets/button.dart';
 
 class LoadingPage extends StatefulWidget {
@@ -33,12 +33,12 @@ class _LoadingPageState extends State<LoadingPage> with TickerProviderStateMixin
     Future.delayed(
       const Duration(seconds: 3),
       (() => {
-        setState(
-          () {
-            carregando = false;
-          },
-        )
-      }),
+            setState(
+              () {
+                carregando = false;
+              },
+            )
+          }),
     );
 
     super.initState();
@@ -62,64 +62,40 @@ class _LoadingPageState extends State<LoadingPage> with TickerProviderStateMixin
   @override
   Widget build(BuildContext context) {
     Size screenSizes = MediaQuery.of(context).size;
-    return Scaffold(
-      appBar: AppBar(
-        title: Center(
+
+    return BasePage(
+      title: 'Projeto Integrador',
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
           child: Text(
-            'Projeto Integrador',
+            'Nós não armazenamos seus dados!\nPortanto não desinstale o app, caso contrário você perderá todos seus dados de leitura e recomendações!',
             style: GoogleFonts.libreBaskerville(
               color: const Color(0xFFEEEEEE),
-              fontWeight: FontWeight.w700,
+              fontSize: 18,
+              height: 1.8,
             ),
+            textAlign: TextAlign.center,
           ),
         ),
-      ),
-      backgroundColor: Colors.transparent,
-      body: Container(
-        width: screenSizes.width,
-        height: screenSizes.height,
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            colors: [
-              Color(0xff1B2123),
-              Color(0xFF202528),
-              Color.fromARGB(255, 59, 66, 68),
-            ],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-          ),
+        SizedBox(
+          width: screenSizes.width,
+          height: (screenSizes.height / 100) * 30,
+          child: Lottie.asset('assets/lottie/book.json', repeat: false),
         ),
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-              child: Text(
-                'Nós não armazenamos seus dados!\nPortanto não desinstale o app, caso contrário você perderá todos seus dados de leitura e recomendações!',
-                style: GoogleFonts.libreBaskerville(
-                  color: const Color(0xFFEEEEEE),
-                  fontSize: 18,
-                  height: 1.8,
+        carregando
+            ? CircularProgressIndicator(
+                color: const Color(0xff24abb9),
+                value: controller.value,
+              )
+            : Padding(
+                padding: EdgeInsets.only(top: (screenSizes.height / 100) * 1),
+                child: Button(
+                  action: () => _continuar(context),
+                  text: 'Continuar',
                 ),
-                textAlign: TextAlign.center,
               ),
-            ),
-            SizedBox(
-              width: screenSizes.width,
-              height: (screenSizes.height / 100) * 30,
-              child: Lottie.asset('assets/lottie/book.json', repeat: false),
-            ),
-            carregando
-                ? CircularProgressIndicator(
-                    color: const Color(0xff24abb9),
-                    value: controller.value,
-                  )
-                : Padding(
-                    padding: EdgeInsets.only(top: (screenSizes.height / 100) * 1),
-                    child: Button(action: () => _continuar(context), text: 'Continuar',)
-                  ),
-          ],
-        ),
-      ),
+      ],
     );
   }
 }

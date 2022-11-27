@@ -4,11 +4,13 @@ import 'package:google_fonts/google_fonts.dart';
 class Button extends StatelessWidget {
   final String text;
   final Function action;
+  final double width;
 
   const Button({
     Key? key,
     required this.text,
     required this.action,
+    this.width = 190
   }) : super(key: key);
 
   @override
@@ -19,8 +21,8 @@ class Button extends StatelessWidget {
           backgroundColor: const MaterialStatePropertyAll<Color>(
             Color(0xff24abb9),
           ),
-          minimumSize: const MaterialStatePropertyAll<Size>(Size(250, 60)),
-          maximumSize: const MaterialStatePropertyAll<Size>(Size(350, 60)),
+          minimumSize: MaterialStatePropertyAll<Size>(Size(width, 60)),
+          maximumSize: MaterialStatePropertyAll<Size>(Size(width + 100, 60)),
           elevation: const MaterialStatePropertyAll(10),
           shape: MaterialStatePropertyAll(RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(30.0),
