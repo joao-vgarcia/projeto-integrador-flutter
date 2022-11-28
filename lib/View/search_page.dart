@@ -6,15 +6,16 @@ import 'package:projeto_integrador/Service/service_locator.dart';
 import 'package:projeto_integrador/View/widgets/base_input.dart';
 import 'package:projeto_integrador/View/widgets/base_page.dart';
 import 'package:projeto_integrador/View/widgets/button.dart';
+import 'package:projeto_integrador/View/widgets/list_item.dart';
 
 class SearchPage extends StatelessWidget {
   final SearchController searchController = locator<SearchController>();
 
   SearchPage({super.key});
 
-  void _continuar(BuildContext context) {
+  Future<void> _continuar(BuildContext context) async {
     FocusManager.instance.primaryFocus?.unfocus();
-    searchController.setBookList();
+    await searchController.getBooks();
   }
 
   @override
@@ -34,8 +35,8 @@ class SearchPage extends StatelessWidget {
       Padding(
         padding: const EdgeInsets.all(20),
         child: BaseInput(
-          onChanged: print,
-          onComplete: () => null,
+          onChanged: searchController.setBookName,
+          onComplete: () => searchController.getBooks(),
           hintText: 'Nome do livro',
         ),
       ),
@@ -43,23 +44,35 @@ class SearchPage extends StatelessWidget {
         text: 'Buscar',
         action: () => _continuar(context),
       ),
-      Observer(builder: ((context) =>
-        Container(
-          width: double.infinity,
-          height: 300,
-          decoration: BoxDecoration(
-            color: Color(0xFF1c1c1c)
-          ),
-          child: searchController.bookList.length > 0 
-            ? ListView.builder(
-              itemCount: searchController.bookList.length,
-              itemBuilder: ((context, index) => 
-                Text(searchController.bookList[index], style: TextStyle(color: Colors.white, fontSize: 16),)
-              )
-            )
-            : const SizedBox.shrink()
-        )
-      )),
+      const SizedBox(
+        height: 20,
+      ),
+      Observer(
+        builder: ((context) => Expanded(
+              child: searchController.bookList.isNotEmpty
+                  ? ListView.builder(
+                      itemCount: searchController.bookList.length,
+                      itemBuilder: ((context, index) {
+                        return ListItem(
+                          title: searchController.bookList[index].titulo,
+                          author: searchController.bookList[index].autor,
+                          thumbnail: searchController.bookList[index].thumbnail,
+                          onSelect: () => print('1'),
+                        );
+                      }))
+                  : const SizedBox.shrink(),
+            )),
+      ),
+
+      Padding(
+        padding: const EdgeInsets.symmetric(vertical: 20.0),
+        child: Button(
+          text: 'Pronto',
+          action: () => _continuar(context),
+          enabled: false,
+        ),
+      ),
+      
     ]);
   }
 }

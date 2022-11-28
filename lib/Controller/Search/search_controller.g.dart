@@ -9,39 +9,63 @@ part of 'search_controller.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$SearchController on SearchControllerBase, Store {
-  Computed<List<String>>? _$bookListComputed;
+  Computed<List<BookModel>>? _$bookListComputed;
 
   @override
-  List<String> get bookList =>
-      (_$bookListComputed ??= Computed<List<String>>(() => super.bookList,
+  List<BookModel> get bookList =>
+      (_$bookListComputed ??= Computed<List<BookModel>>(() => super.bookList,
               name: 'SearchControllerBase.bookList'))
           .value;
+
+  late final _$_bookNameAtom =
+      Atom(name: 'SearchControllerBase._bookName', context: context);
+
+  @override
+  String get _bookName {
+    _$_bookNameAtom.reportRead();
+    return super._bookName;
+  }
+
+  @override
+  set _bookName(String value) {
+    _$_bookNameAtom.reportWrite(value, super._bookName, () {
+      super._bookName = value;
+    });
+  }
 
   late final _$_bookListAtom =
       Atom(name: 'SearchControllerBase._bookList', context: context);
 
   @override
-  List<String> get _bookList {
+  List<BookModel> get _bookList {
     _$_bookListAtom.reportRead();
     return super._bookList;
   }
 
   @override
-  set _bookList(List<String> value) {
+  set _bookList(List<BookModel> value) {
     _$_bookListAtom.reportWrite(value, super._bookList, () {
       super._bookList = value;
     });
+  }
+
+  late final _$getBooksAsyncAction =
+      AsyncAction('SearchControllerBase.getBooks', context: context);
+
+  @override
+  Future<dynamic> getBooks() {
+    return _$getBooksAsyncAction.run(() => super.getBooks());
   }
 
   late final _$SearchControllerBaseActionController =
       ActionController(name: 'SearchControllerBase', context: context);
 
   @override
-  dynamic setBookList() {
+  dynamic setBookName(String value) {
     final _$actionInfo = _$SearchControllerBaseActionController.startAction(
-        name: 'SearchControllerBase.setBookList');
+        name: 'SearchControllerBase.setBookName');
     try {
-      return super.setBookList();
+      return super.setBookName(value);
     } finally {
       _$SearchControllerBaseActionController.endAction(_$actionInfo);
     }

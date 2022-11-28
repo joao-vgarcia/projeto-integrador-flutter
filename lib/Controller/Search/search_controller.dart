@@ -1,20 +1,31 @@
 import 'package:mobx/mobx.dart';
+import 'package:projeto_integrador/Model/book_model.dart';
+import 'package:projeto_integrador/Service/api_service.dart';
 
 part 'search_controller.g.dart';
 
 class SearchController = SearchControllerBase with _$SearchController;
 
 abstract class SearchControllerBase with Store {
-  final List<String> lista = ['livro 1', 'livro 1', 'livro 1', 'livro 1', 'livro 1','livro 1','livro 1','livro 1'];
+  ApiService service;
+
+  SearchControllerBase(this.service);
 
   @observable
-  List<String> _bookList = [];
+  String _bookName = '';
+
+  @observable
+  List<BookModel> _bookList = [];
 
   @computed
-  List<String> get bookList => _bookList;
+  List<BookModel> get bookList => _bookList;
 
   @action
-  setBookList() {
-    _bookList = lista;
+  setBookName(String value) => _bookName = value;
+
+  @action
+  Future getBooks() async {
+    _bookList = await service.getBooks(_bookName);
+    print(_bookList);
   }
 }
