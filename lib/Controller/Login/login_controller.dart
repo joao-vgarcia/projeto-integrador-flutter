@@ -19,9 +19,9 @@ abstract class LoginControllerBase with Store {
   void setName(String value) => name = value;
   
   @action
-  updateUsername(String value) {
+  updateUsername() {
     setUserLogged();
-    localClient.setString(LocalKeys.userName, value);
+    localClient.setString(LocalKeys.userName, name);
   }
   
   @action

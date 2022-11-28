@@ -49,6 +49,38 @@ mixin _$SearchController on SearchControllerBase, Store {
     });
   }
 
+  late final _$_selectedBooksAtom =
+      Atom(name: 'SearchControllerBase._selectedBooks', context: context);
+
+  @override
+  List<BookModel> get _selectedBooks {
+    _$_selectedBooksAtom.reportRead();
+    return super._selectedBooks;
+  }
+
+  @override
+  set _selectedBooks(List<BookModel> value) {
+    _$_selectedBooksAtom.reportWrite(value, super._selectedBooks, () {
+      super._selectedBooks = value;
+    });
+  }
+
+  late final _$buttonEnabledAtom =
+      Atom(name: 'SearchControllerBase.buttonEnabled', context: context);
+
+  @override
+  bool get buttonEnabled {
+    _$buttonEnabledAtom.reportRead();
+    return super.buttonEnabled;
+  }
+
+  @override
+  set buttonEnabled(bool value) {
+    _$buttonEnabledAtom.reportWrite(value, super.buttonEnabled, () {
+      super.buttonEnabled = value;
+    });
+  }
+
   late final _$getBooksAsyncAction =
       AsyncAction('SearchControllerBase.getBooks', context: context);
 
@@ -72,8 +104,53 @@ mixin _$SearchController on SearchControllerBase, Store {
   }
 
   @override
+  dynamic selectBook(BookModel book) {
+    final _$actionInfo = _$SearchControllerBaseActionController.startAction(
+        name: 'SearchControllerBase.selectBook');
+    try {
+      return super.selectBook(book);
+    } finally {
+      _$SearchControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic removeBook(BookModel book) {
+    final _$actionInfo = _$SearchControllerBaseActionController.startAction(
+        name: 'SearchControllerBase.removeBook');
+    try {
+      return super.removeBook(book);
+    } finally {
+      _$SearchControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic setLocalBook() {
+    final _$actionInfo = _$SearchControllerBaseActionController.startAction(
+        name: 'SearchControllerBase.setLocalBook');
+    try {
+      return super.setLocalBook();
+    } finally {
+      _$SearchControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic removeLocalBook(BookModel book) {
+    final _$actionInfo = _$SearchControllerBaseActionController.startAction(
+        name: 'SearchControllerBase.removeLocalBook');
+    try {
+      return super.removeLocalBook(book);
+    } finally {
+      _$SearchControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
+buttonEnabled: ${buttonEnabled},
 bookList: ${bookList}
     ''';
   }

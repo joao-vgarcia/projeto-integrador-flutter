@@ -90,7 +90,7 @@ class _CarousselPageState extends State<CarousselPage> {
                           texts[i],
                           textAlign: TextAlign.center,
                           style: GoogleFonts.libreBaskerville(
-                            fontSize: 30,
+                            fontSize: 22,
                             color: const Color(0xFFEEEEEE),
                             fontWeight: FontWeight.w700,
                           ),

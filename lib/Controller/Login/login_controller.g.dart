@@ -40,11 +40,11 @@ mixin _$LoginController on LoginControllerBase, Store {
   }
 
   @override
-  dynamic updateUsername(String value) {
+  dynamic updateUsername() {
     final _$actionInfo = _$LoginControllerBaseActionController.startAction(
         name: 'LoginControllerBase.updateUsername');
     try {
-      return super.updateUsername(value);
+      return super.updateUsername();
     } finally {
       _$LoginControllerBaseActionController.endAction(_$actionInfo);
     }

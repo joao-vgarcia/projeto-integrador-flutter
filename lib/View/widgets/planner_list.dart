@@ -1,20 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class ListItem extends StatefulWidget {
+class PlannerItem extends StatefulWidget {
   final String title;
   final String author;
   final Function select;
   final Function remove;
-  final String? thumbnail;
 
-  const ListItem({super.key, required this.title, required this.author, required this.select, this.thumbnail, required this.remove});
+  const PlannerItem({
+    super.key,
+    required this.title,
+    required this.author,
+    required this.select,
+    required this.remove,
+  });
 
   @override
-  State<ListItem> createState() => _ListItemState();
+  State<PlannerItem> createState() => _PlannerItemState();
 }
 
-class _ListItemState extends State<ListItem> {
+class _PlannerItemState extends State<PlannerItem> {
   bool selected = false;
 
   toggleSelected() {
@@ -69,20 +74,8 @@ class _ListItemState extends State<ListItem> {
                     ),
                   ),
                 ),
-                widget.thumbnail != null && widget.thumbnail != ''
-                    ? SizedBox(
-                        child: Padding(
-                          padding: const EdgeInsets.only(top: 10.0),
-                          child: Image.network(widget.thumbnail!),
-                        ),
-                      )
-                    : const SizedBox.shrink()
               ],
             ),
-            Icon(
-              !selected ? Icons.add : Icons.close,
-              color: !selected ? const Color(0xFFEEEEEE) : const Color(0xFF0c0c0c),
-            )
           ],
         ),
       ),

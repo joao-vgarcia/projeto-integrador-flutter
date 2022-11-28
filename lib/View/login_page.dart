@@ -18,8 +18,7 @@ class _LoginPageState extends State<LoginPage> {
   final LoginController loginController = locator<LoginController>();
 
   void _continuar(BuildContext context) {
-    // loginController.updateUsername(loginController.name);
-    // const Widget page = loginController.isUserLogged() ? const LoginPage() : const CarousselPage();
+    loginController.updateUsername();
     Widget page = SearchPage();
     Navigator.of(context).pushAndRemoveUntil(
       MaterialPageRoute(builder: (context) => page),

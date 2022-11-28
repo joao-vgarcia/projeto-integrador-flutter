@@ -4,6 +4,7 @@ import 'package:lottie/lottie.dart';
 import 'package:projeto_integrador/Controller/Login/login_controller.dart';
 import 'package:projeto_integrador/Service/service_locator.dart';
 import 'package:projeto_integrador/View/carousel_page.dart';
+import 'package:projeto_integrador/View/home_page.dart';
 import 'package:projeto_integrador/View/widgets/base_page.dart';
 import 'package:projeto_integrador/View/widgets/button.dart';
 
@@ -51,8 +52,8 @@ class _LoadingPageState extends State<LoadingPage> with TickerProviderStateMixin
   }
 
   void _continuar(BuildContext context) {
-    // const Widget page = loginController.isUserLogged() ? const LoginPage() : const CarousselPage();
-    const Widget page = CarousselPage();
+    Widget page = loginController.isUserLogged() ? HomePage() : CarousselPage();
+    // Widget page = CarousselPage();
     Navigator.of(context).pushAndRemoveUntil(
       MaterialPageRoute(builder: (context) => page),
       ((route) => false),

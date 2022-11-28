@@ -27,7 +27,7 @@ class BaseInput extends StatelessWidget {
               color: Colors.white,
               fontSize: 18,
             ),
-            autofocus: true,
+            autofocus: false,
             autocorrect: true,
             enableSuggestions: true,
             cursorColor: Colors.white,
