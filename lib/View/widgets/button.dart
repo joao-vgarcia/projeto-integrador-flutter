@@ -7,6 +7,7 @@ class Button extends StatelessWidget {
   final Function action;
   final double width;
   final bool enabled;
+  final bool outlined;
 
   const Button({
     Key? key,
@@ -14,27 +15,32 @@ class Button extends StatelessWidget {
     required this.action,
     this.width = 190,
     this.enabled = true,
+    this.outlined = false,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Observer(
-      builder: (context) =>  OutlinedButton(
+      builder: (context) => OutlinedButton(
         clipBehavior: Clip.hardEdge,
         style: ButtonStyle(
-            backgroundColor: MaterialStatePropertyAll<Color>(
-              enabled ? Color(0xff24abb9) : Color(0xffcccccc),
-            ),
-            minimumSize: MaterialStatePropertyAll<Size>(Size(width, 60)),
-            maximumSize: MaterialStatePropertyAll<Size>(Size(width + 100, 60)),
-            elevation: const MaterialStatePropertyAll(10),
-            shape: MaterialStatePropertyAll(RoundedRectangleBorder(
+          backgroundColor: MaterialStatePropertyAll<Color>(
+            enabled ? (outlined ? Colors.transparent : const Color(0xff24abb9)) : const Color(0xffcccccc),
+          ),
+          shadowColor: outlined ? MaterialStatePropertyAll<Color>(Colors.white.withOpacity(0.1)) : null,
+          minimumSize: MaterialStatePropertyAll<Size>(Size(width, 60)),
+          maximumSize: MaterialStatePropertyAll<Size>(Size(width + 100, 60)),
+          elevation: outlined ? const MaterialStatePropertyAll(1) : const MaterialStatePropertyAll(10),
+          shape: MaterialStatePropertyAll(
+            RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(30.0),
-            ))),
+            ),
+          ),
+        ),
         child: Text(
           text,
           style: GoogleFonts.libreBaskerville(
-            color: const Color(0xff1B2123),
+            color: outlined ? Colors.red : const Color(0xff1B2123),
             fontSize: 18,
             fontWeight: FontWeight.w700,
           ),

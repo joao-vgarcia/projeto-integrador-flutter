@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:projeto_integrador/Controller/Login/login_controller.dart';
 import 'package:projeto_integrador/Service/service_locator.dart';
 import 'package:projeto_integrador/View/search_page.dart';
@@ -17,9 +16,10 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final LoginController loginController = locator<LoginController>();
 
-  void _continuar(BuildContext context) {
-    loginController.updateUsername();
+  Future<void> _continuar(BuildContext context) async {
+    await loginController.updateUsername();
     Widget page = SearchPage();
+    // ignore: use_build_context_synchronously
     Navigator.of(context).pushAndRemoveUntil(
       MaterialPageRoute(builder: (context) => page),
       ((route) => false),
@@ -36,7 +36,7 @@ class _LoginPageState extends State<LoginPage> {
           child: BaseInput(
             hintText: 'Digite seu nome',
             onChanged: loginController.setName,
-            onComplete: () => _continuar(context),
+            onComplete: () async => await _continuar(context),
           )
         ),
         Button(text: 'Entrar', action: () => _continuar(context))

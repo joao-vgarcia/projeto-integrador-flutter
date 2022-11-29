@@ -22,20 +22,8 @@ abstract class PlannerControllerBase with Store {
   List<BookModel> listOfReadingBooks = [];
 
   @action
-  setLocalBook(BookModel book) {
-    List<String> currentList = localClient.getStringList(LocalKeys.readingBooks);
-    currentList.add(book.toString());
-    localClient.setStringList(LocalKeys.readingBooks, currentList);
-  }
-
-  @action
-  removeLocalBook(BookModel book) {
-    List<String> currentList = localClient.getStringList(LocalKeys.readingBooks);
-    currentList.remove(book.toString());
-  }
-
-  @action
   List<BookModel> parseLocalBooks() {
+    listOfReadingBooks = [];
     List<String> currentList = localClient.getStringList(LocalKeys.readingBooks);
 
     if (currentList.isNotEmpty) {
@@ -55,5 +43,25 @@ abstract class PlannerControllerBase with Store {
     }
 
     return listOfReadingBooks;
+  }
+
+  @action
+  Future<void> setLocalBook(List<BookModel> bookList) async {
+    List<String> currentList = [];
+
+    for (var book in bookList) {
+      currentList.add(book.toString());
+    }
+
+    await localClient.remove(LocalKeys.readingBooks);
+    await localClient.setStringList(LocalKeys.readingBooks, currentList);
+  }
+
+  @action
+  Future<void> setFinishedBook(BookModel book) async {
+    List<BookModel> list = parseLocalBooks();
+    list.removeWhere((element) => element.titulo == book.titulo);
+    await setLocalBook(list);
+    parseLocalBooks();
   }
 }

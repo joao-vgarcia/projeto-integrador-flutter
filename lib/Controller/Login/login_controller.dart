@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:mobx/mobx.dart';
 import 'package:projeto_integrador/Model/local_keys.dart';
 import 'package:projeto_integrador/Service/local_client_service.dart';
@@ -19,9 +18,9 @@ abstract class LoginControllerBase with Store {
   void setName(String value) => name = value;
   
   @action
-  updateUsername() {
+  Future<void> updateUsername() async {
     setUserLogged();
-    localClient.setString(LocalKeys.userName, name);
+    await localClient.setString(LocalKeys.userName, name);
   }
   
   @action
@@ -30,7 +29,7 @@ abstract class LoginControllerBase with Store {
   }
 
   @action
-  void setUserLogged() {
-    localClient.setBool(LocalKeys.login, true);
+  Future<void> setUserLogged() async {
+    await localClient.setBool(LocalKeys.login, true);
   }
 }

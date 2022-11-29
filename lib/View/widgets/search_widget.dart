@@ -2,15 +2,31 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:projeto_integrador/Controller/Search/search_controller.dart';
+import 'package:projeto_integrador/Service/api_service.dart';
+import 'package:projeto_integrador/Service/local_client_service.dart';
+import 'package:projeto_integrador/Service/service_locator.dart';
 import 'package:projeto_integrador/View/home_page.dart';
 import 'package:projeto_integrador/View/widgets/base_input.dart';
 import 'package:projeto_integrador/View/widgets/button.dart';
 import 'package:projeto_integrador/View/widgets/list_item.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class SearchWidget extends StatelessWidget {
-  final SearchController searchController;
+class SearchWidget extends StatefulWidget {
   final bool fromHome;
-  const SearchWidget({Key? key, required this.searchController, required this.fromHome}) : super(key: key);
+  const SearchWidget({Key? key, required this.fromHome}) : super(key: key);
+
+  @override
+  State<SearchWidget> createState() => _SearchWidgetState();
+}
+
+class _SearchWidgetState extends State<SearchWidget> {
+  late SearchController searchController;
+
+  @override
+  void initState() {
+    super.initState();
+    searchController = SearchController(locator<ApiService>(), locator<LocalClientService>());
+  }
 
   Future<void> _buscar(BuildContext context) async {
     FocusManager.instance.primaryFocus?.unfocus();
@@ -18,13 +34,14 @@ class SearchWidget extends StatelessWidget {
   }
 
   Future<void> _continuar(BuildContext context) async {
-    searchController.setLocalBook();
-    
-    Widget page = HomePage();
-    Navigator.of(context).pushAndRemoveUntil(
-      MaterialPageRoute(builder: (context) => page),
-      ((route) => false),
-    );
+    await searchController.setLocalBook();
+    if (!widget.fromHome) {
+      Widget page = HomePage();
+      Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(builder: (context) => page),
+        ((route) => false),
+      );
+    }
   }
 
   @override

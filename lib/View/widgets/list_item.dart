@@ -58,6 +58,7 @@ class _ListItemState extends State<ListItem> {
                     overflow: TextOverflow.visible,
                   ),
                 ),
+                const SizedBox(height: 10,),
                 SizedBox(
                   width: width,
                   child: Text(
@@ -69,6 +70,7 @@ class _ListItemState extends State<ListItem> {
                     ),
                   ),
                 ),
+                const SizedBox(height: 10,),
                 widget.thumbnail != null && widget.thumbnail != ''
                     ? SizedBox(
                         child: Padding(

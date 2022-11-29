@@ -22,11 +22,11 @@ class HomePage extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           bottom: TabBar(
-            indicatorColor: Color(0xff24abb9),
+            indicatorColor: const Color(0xff24abb9),
             indicatorWeight: 4,
             indicatorSize: TabBarIndicatorSize.tab,
-            unselectedLabelColor: Color(0xFFAAAAAA),
-            labelColor: Color(0xff24abb9),
+            unselectedLabelColor: const Color(0xFFAAAAAA),
+            labelColor: const Color(0xff24abb9),
             tabs: [
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 25.0),
@@ -69,9 +69,9 @@ class HomePage extends StatelessWidget {
               end: Alignment.bottomCenter,
             ),
           ),
-          child: TabBarView(children: [
-            HomeWidget(plannerController: plannerController, loginController: loginController,),
-            SearchWidget(searchController: searchController, fromHome: true)
+          child: const TabBarView(children: [
+            HomeWidget(),
+            SearchWidget(fromHome: true)
           ]),
         ),
       ),

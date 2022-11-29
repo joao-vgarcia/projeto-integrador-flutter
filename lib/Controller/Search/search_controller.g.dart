@@ -49,19 +49,19 @@ mixin _$SearchController on SearchControllerBase, Store {
     });
   }
 
-  late final _$_selectedBooksAtom =
-      Atom(name: 'SearchControllerBase._selectedBooks', context: context);
+  late final _$selectedBooksAtom =
+      Atom(name: 'SearchControllerBase.selectedBooks', context: context);
 
   @override
-  List<BookModel> get _selectedBooks {
-    _$_selectedBooksAtom.reportRead();
-    return super._selectedBooks;
+  List<BookModel> get selectedBooks {
+    _$selectedBooksAtom.reportRead();
+    return super.selectedBooks;
   }
 
   @override
-  set _selectedBooks(List<BookModel> value) {
-    _$_selectedBooksAtom.reportWrite(value, super._selectedBooks, () {
-      super._selectedBooks = value;
+  set selectedBooks(List<BookModel> value) {
+    _$selectedBooksAtom.reportWrite(value, super.selectedBooks, () {
+      super.selectedBooks = value;
     });
   }
 
@@ -87,6 +87,14 @@ mixin _$SearchController on SearchControllerBase, Store {
   @override
   Future<dynamic> getBooks() {
     return _$getBooksAsyncAction.run(() => super.getBooks());
+  }
+
+  late final _$setLocalBookAsyncAction =
+      AsyncAction('SearchControllerBase.setLocalBook', context: context);
+
+  @override
+  Future<void> setLocalBook() {
+    return _$setLocalBookAsyncAction.run(() => super.setLocalBook());
   }
 
   late final _$SearchControllerBaseActionController =
@@ -126,30 +134,9 @@ mixin _$SearchController on SearchControllerBase, Store {
   }
 
   @override
-  dynamic setLocalBook() {
-    final _$actionInfo = _$SearchControllerBaseActionController.startAction(
-        name: 'SearchControllerBase.setLocalBook');
-    try {
-      return super.setLocalBook();
-    } finally {
-      _$SearchControllerBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  dynamic removeLocalBook(BookModel book) {
-    final _$actionInfo = _$SearchControllerBaseActionController.startAction(
-        name: 'SearchControllerBase.removeLocalBook');
-    try {
-      return super.removeLocalBook(book);
-    } finally {
-      _$SearchControllerBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   String toString() {
     return '''
+selectedBooks: ${selectedBooks},
 buttonEnabled: ${buttonEnabled},
 bookList: ${bookList}
     ''';

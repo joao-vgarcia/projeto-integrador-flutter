@@ -25,6 +25,22 @@ mixin _$LoginController on LoginControllerBase, Store {
     });
   }
 
+  late final _$updateUsernameAsyncAction =
+      AsyncAction('LoginControllerBase.updateUsername', context: context);
+
+  @override
+  Future<void> updateUsername() {
+    return _$updateUsernameAsyncAction.run(() => super.updateUsername());
+  }
+
+  late final _$setUserLoggedAsyncAction =
+      AsyncAction('LoginControllerBase.setUserLogged', context: context);
+
+  @override
+  Future<void> setUserLogged() {
+    return _$setUserLoggedAsyncAction.run(() => super.setUserLogged());
+  }
+
   late final _$LoginControllerBaseActionController =
       ActionController(name: 'LoginControllerBase', context: context);
 
@@ -40,33 +56,11 @@ mixin _$LoginController on LoginControllerBase, Store {
   }
 
   @override
-  dynamic updateUsername() {
-    final _$actionInfo = _$LoginControllerBaseActionController.startAction(
-        name: 'LoginControllerBase.updateUsername');
-    try {
-      return super.updateUsername();
-    } finally {
-      _$LoginControllerBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   bool isUserLogged() {
     final _$actionInfo = _$LoginControllerBaseActionController.startAction(
         name: 'LoginControllerBase.isUserLogged');
     try {
       return super.isUserLogged();
-    } finally {
-      _$LoginControllerBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void setUserLogged() {
-    final _$actionInfo = _$LoginControllerBaseActionController.startAction(
-        name: 'LoginControllerBase.setUserLogged');
-    try {
-      return super.setUserLogged();
     } finally {
       _$LoginControllerBaseActionController.endAction(_$actionInfo);
     }

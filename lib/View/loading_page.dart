@@ -52,7 +52,7 @@ class _LoadingPageState extends State<LoadingPage> with TickerProviderStateMixin
   }
 
   void _continuar(BuildContext context) {
-    Widget page = loginController.isUserLogged() ? HomePage() : CarousselPage();
+    Widget page = loginController.isUserLogged() ? HomePage() : const CarousselPage();
     // Widget page = CarousselPage();
     Navigator.of(context).pushAndRemoveUntil(
       MaterialPageRoute(builder: (context) => page),

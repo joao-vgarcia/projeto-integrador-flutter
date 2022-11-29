@@ -49,30 +49,24 @@ mixin _$PlannerController on PlannerControllerBase, Store {
     });
   }
 
+  late final _$setLocalBookAsyncAction =
+      AsyncAction('PlannerControllerBase.setLocalBook', context: context);
+
+  @override
+  Future<void> setLocalBook(List<BookModel> bookList) {
+    return _$setLocalBookAsyncAction.run(() => super.setLocalBook(bookList));
+  }
+
+  late final _$setFinishedBookAsyncAction =
+      AsyncAction('PlannerControllerBase.setFinishedBook', context: context);
+
+  @override
+  Future<void> setFinishedBook(BookModel book) {
+    return _$setFinishedBookAsyncAction.run(() => super.setFinishedBook(book));
+  }
+
   late final _$PlannerControllerBaseActionController =
       ActionController(name: 'PlannerControllerBase', context: context);
-
-  @override
-  dynamic setLocalBook(BookModel book) {
-    final _$actionInfo = _$PlannerControllerBaseActionController.startAction(
-        name: 'PlannerControllerBase.setLocalBook');
-    try {
-      return super.setLocalBook(book);
-    } finally {
-      _$PlannerControllerBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  dynamic removeLocalBook(BookModel book) {
-    final _$actionInfo = _$PlannerControllerBaseActionController.startAction(
-        name: 'PlannerControllerBase.removeLocalBook');
-    try {
-      return super.removeLocalBook(book);
-    } finally {
-      _$PlannerControllerBaseActionController.endAction(_$actionInfo);
-    }
-  }
 
   @override
   List<BookModel> parseLocalBooks() {

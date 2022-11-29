@@ -21,7 +21,7 @@ abstract class SearchControllerBase with Store {
   List<BookModel> _bookList = [];
 
   @observable
-  List<BookModel> _selectedBooks = [];
+  List<BookModel> selectedBooks = [];
 
   @observable
   bool buttonEnabled = false;
@@ -34,16 +34,14 @@ abstract class SearchControllerBase with Store {
 
   @action
   selectBook(BookModel book) {
-    _selectedBooks.add(book);
-    buttonEnabled = _selectedBooks.isNotEmpty;
-    print(_selectedBooks);
+    selectedBooks.add(book);
+    buttonEnabled = selectedBooks.isNotEmpty;
   }
 
   @action
   removeBook(BookModel book) {
-    _selectedBooks.remove(book);
-    buttonEnabled = _selectedBooks.isNotEmpty;
-    print(_selectedBooks);
+    selectedBooks.remove(book);
+    buttonEnabled = selectedBooks.isNotEmpty;
   }
 
   @action
@@ -52,22 +50,14 @@ abstract class SearchControllerBase with Store {
   }
 
   @action
-  setLocalBook() {
+  Future<void> setLocalBook() async {
     List<String> currentList = localClient.getStringList(LocalKeys.readingBooks);
-
-    for (var book in _selectedBooks) {
+    print(currentList);
+    for (var book in selectedBooks) {
       currentList.add(book.toString());
     }
 
-    localClient.setStringList(LocalKeys.readingBooks, currentList);
-
-    currentList = localClient.getStringList(LocalKeys.readingBooks);
-    print(currentList);
-  }
-
-  @action
-  removeLocalBook(BookModel book) {
-    List<String> currentList = localClient.getStringList(LocalKeys.readingBooks);
-    currentList.remove(book.toString());
+    await localClient.remove(LocalKeys.readingBooks);
+    await localClient.setStringList(LocalKeys.readingBooks, currentList);
   }
 }
