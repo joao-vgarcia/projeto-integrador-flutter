@@ -9,7 +9,6 @@ import 'package:projeto_integrador/View/home_page.dart';
 import 'package:projeto_integrador/View/widgets/base_input.dart';
 import 'package:projeto_integrador/View/widgets/button.dart';
 import 'package:projeto_integrador/View/widgets/list_item.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class SearchWidget extends StatefulWidget {
   final bool fromHome;
@@ -35,13 +34,12 @@ class _SearchWidgetState extends State<SearchWidget> {
 
   Future<void> _continuar(BuildContext context) async {
     await searchController.setLocalBook();
-    if (!widget.fromHome) {
-      Widget page = HomePage();
-      Navigator.of(context).pushAndRemoveUntil(
-        MaterialPageRoute(builder: (context) => page),
-        ((route) => false),
-      );
-    }
+
+    Widget page = HomePage();
+    Navigator.of(context).pushAndRemoveUntil(
+      MaterialPageRoute(builder: (context) => page),
+      ((route) => false),
+    );
   }
 
   @override

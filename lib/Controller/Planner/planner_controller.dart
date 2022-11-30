@@ -12,14 +12,30 @@ abstract class PlannerControllerBase with Store {
 
   PlannerControllerBase(this.localClient);
 
-  @computed
-  String get userName => localClient.getString(LocalKeys.userName);
+  @observable
+  String userName = '';
 
   @observable
   List<String> booksList = [];
 
   @observable
   List<BookModel> listOfReadingBooks = [];
+
+  @observable
+  bool hasFinishedBooks = false;
+
+  @action
+  updateFinishedBooks() {
+    final book = localClient.getString(LocalKeys.finishedBooks);
+    if(book != '') {
+      hasFinishedBooks = true;
+    }
+  }
+
+  @action
+  updateUserName() {
+    userName = localClient.getString(LocalKeys.userName);
+  }
 
   @action
   List<BookModel> parseLocalBooks() {
@@ -61,6 +77,12 @@ abstract class PlannerControllerBase with Store {
   Future<void> setFinishedBook(BookModel book) async {
     List<BookModel> list = parseLocalBooks();
     list.removeWhere((element) => element.titulo == book.titulo);
+    try{
+      await localClient.remove(LocalKeys.finishedBooks);
+    } catch (_){}
+
+    await localClient.setString(LocalKeys.finishedBooks, book.toString());
+
     await setLocalBook(list);
     parseLocalBooks();
   }

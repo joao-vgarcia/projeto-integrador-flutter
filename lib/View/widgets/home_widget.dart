@@ -6,15 +6,14 @@ import 'package:projeto_integrador/Controller/Planner/planner_controller.dart';
 import 'package:projeto_integrador/Model/book_model.dart';
 import 'package:projeto_integrador/Service/local_client_service.dart';
 import 'package:projeto_integrador/Service/service_locator.dart';
+import 'package:projeto_integrador/View/recomendations_page.dart';
 import 'package:projeto_integrador/View/widgets/base_input.dart';
 import 'package:projeto_integrador/View/widgets/button.dart';
 import 'package:projeto_integrador/View/widgets/planner_list.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeWidget extends StatefulWidget {
-
-  const HomeWidget({
-    super.key});
+  const HomeWidget({super.key});
 
   @override
   State<HomeWidget> createState() => _HomeWidgetState();
@@ -30,6 +29,7 @@ class _HomeWidgetState extends State<HomeWidget> {
     plannerController = PlannerController(locator<LocalClientService>());
     plannerController.parseLocalBooks();
     loginController = LoginController(locator<LocalClientService>());
+    plannerController.updateUserName();
   }
 
   _showNameModal(BuildContext context) {
@@ -64,6 +64,7 @@ class _HomeWidgetState extends State<HomeWidget> {
             action: () async {
               Navigator.pop(context);
               await loginController.updateUsername();
+              plannerController.updateUserName();
             },
           )
         ],
@@ -126,7 +127,6 @@ class _HomeWidgetState extends State<HomeWidget> {
                 color: const Color(0xFFEEEEEE),
                 fontWeight: FontWeight.w400,
                 height: 1.3,
-                
               ),
             ),
           ),
@@ -135,28 +135,80 @@ class _HomeWidgetState extends State<HomeWidget> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-              Button(
-                width: 90,
-                text: 'Cancelar',
-                outlined: true,
-                action: () {
-                  Navigator.pop(context);
-                },
-              ),
-              Button(
-                text: 'Terminar leitura',
-                action: () async {
-                  await plannerController.setFinishedBook(book);
-                  // ignore: use_build_context_synchronously
-                  Navigator.pop(context);
-                },
-              )
-
-            ],),
+                Button(
+                  width: 90,
+                  text: 'Cancelar',
+                  outlined: true,
+                  action: () {
+                    Navigator.pop(context);
+                  },
+                ),
+                Button(
+                  text: 'Terminar leitura',
+                  action: () async {
+                    await plannerController.setFinishedBook(book);
+                    // ignore: use_build_context_synchronously
+                    Navigator.pop(context);
+                  },
+                )
+              ],
+            ),
           ),
         ],
       ),
     );
+  }
+
+  _getRecomendations(BuildContext context) {
+    plannerController.updateFinishedBooks();
+    if (plannerController.hasFinishedBooks) {
+      Widget page = const RecomendationsPage();
+
+      Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(builder: (context) => page),
+        ((route) => true),
+      );
+    } else {
+      showModalBottomSheet(
+        context: context,
+        backgroundColor: const Color(0xFF202528),
+        elevation: 40,
+        builder: (context) => Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(top: 20),
+              child: Text(
+                'Obter recomendações',
+                textAlign: TextAlign.center,
+                style: GoogleFonts.libreBaskerville(
+                  fontSize: 22,
+                  color: const Color(0xFFEEEEEE),
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 20, bottom: 20),
+              child: Text(
+                'Para obter recomendações você precisa ter finalizado pelo menos um livro',
+                textAlign: TextAlign.center,
+                style: GoogleFonts.libreBaskerville(
+                  fontSize: 16,
+                  color: const Color(0xFFEEEEEE),
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+            ),
+            Button(
+              text: 'Entendi',
+              action: () async {
+                Navigator.pop(context);
+              },
+            )
+          ],
+        ),
+      );
+    }
   }
 
   @override
@@ -168,13 +220,15 @@ class _HomeWidgetState extends State<HomeWidget> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                'Olá, ${plannerController.userName}!',
-                textAlign: TextAlign.center,
-                style: GoogleFonts.libreBaskerville(
-                  fontSize: 20,
-                  color: const Color(0xFFEEEEEE),
-                  fontWeight: FontWeight.w700,
+              Observer(
+                builder: (context) => Text(
+                  'Olá, ${plannerController.userName}!',
+                  textAlign: TextAlign.center,
+                  style: GoogleFonts.libreBaskerville(
+                    fontSize: 20,
+                    color: const Color(0xFFEEEEEE),
+                    fontWeight: FontWeight.w700,
+                  ),
                 ),
               ),
               Container(
@@ -229,6 +283,10 @@ class _HomeWidgetState extends State<HomeWidget> {
                     ),
                   )
                 : const SizedBox.shrink())),
+        Observer(builder: (context) => Button(text: 'Obter recomendações', action: () => _getRecomendations(context))),
+        const SizedBox(
+          height: 30,
+        ),
       ],
     );
   }

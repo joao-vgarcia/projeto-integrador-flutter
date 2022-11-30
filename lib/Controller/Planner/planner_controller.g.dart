@@ -9,13 +9,21 @@ part of 'planner_controller.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$PlannerController on PlannerControllerBase, Store {
-  Computed<String>? _$userNameComputed;
+  late final _$userNameAtom =
+      Atom(name: 'PlannerControllerBase.userName', context: context);
 
   @override
-  String get userName =>
-      (_$userNameComputed ??= Computed<String>(() => super.userName,
-              name: 'PlannerControllerBase.userName'))
-          .value;
+  String get userName {
+    _$userNameAtom.reportRead();
+    return super.userName;
+  }
+
+  @override
+  set userName(String value) {
+    _$userNameAtom.reportWrite(value, super.userName, () {
+      super.userName = value;
+    });
+  }
 
   late final _$booksListAtom =
       Atom(name: 'PlannerControllerBase.booksList', context: context);
@@ -49,6 +57,22 @@ mixin _$PlannerController on PlannerControllerBase, Store {
     });
   }
 
+  late final _$hasFinishedBooksAtom =
+      Atom(name: 'PlannerControllerBase.hasFinishedBooks', context: context);
+
+  @override
+  bool get hasFinishedBooks {
+    _$hasFinishedBooksAtom.reportRead();
+    return super.hasFinishedBooks;
+  }
+
+  @override
+  set hasFinishedBooks(bool value) {
+    _$hasFinishedBooksAtom.reportWrite(value, super.hasFinishedBooks, () {
+      super.hasFinishedBooks = value;
+    });
+  }
+
   late final _$setLocalBookAsyncAction =
       AsyncAction('PlannerControllerBase.setLocalBook', context: context);
 
@@ -69,6 +93,28 @@ mixin _$PlannerController on PlannerControllerBase, Store {
       ActionController(name: 'PlannerControllerBase', context: context);
 
   @override
+  dynamic updateFinishedBooks() {
+    final _$actionInfo = _$PlannerControllerBaseActionController.startAction(
+        name: 'PlannerControllerBase.updateFinishedBooks');
+    try {
+      return super.updateFinishedBooks();
+    } finally {
+      _$PlannerControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic updateUserName() {
+    final _$actionInfo = _$PlannerControllerBaseActionController.startAction(
+        name: 'PlannerControllerBase.updateUserName');
+    try {
+      return super.updateUserName();
+    } finally {
+      _$PlannerControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   List<BookModel> parseLocalBooks() {
     final _$actionInfo = _$PlannerControllerBaseActionController.startAction(
         name: 'PlannerControllerBase.parseLocalBooks');
@@ -82,9 +128,10 @@ mixin _$PlannerController on PlannerControllerBase, Store {
   @override
   String toString() {
     return '''
+userName: ${userName},
 booksList: ${booksList},
 listOfReadingBooks: ${listOfReadingBooks},
-userName: ${userName}
+hasFinishedBooks: ${hasFinishedBooks}
     ''';
   }
 }

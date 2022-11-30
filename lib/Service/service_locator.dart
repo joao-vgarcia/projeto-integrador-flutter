@@ -16,6 +16,6 @@ Future<void> init() async {
   locator.registerLazySingleton<LoginController>(() => LoginController(locator()));
   locator.registerLazySingleton<PlannerController>(() => PlannerController(locator()));
   locator.registerLazySingleton<SearchController>(() => SearchController(locator(), locator()));
-  locator.registerLazySingleton<SuggestionsController>(() => SuggestionsController());
+  locator.registerLazySingleton<SuggestionsController>(() => SuggestionsController(locator(), locator()));
   locator.registerLazySingleton<LocalClientService>(() => LocalClientService(localPref));
 }
